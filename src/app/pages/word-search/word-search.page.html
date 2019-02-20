@@ -4,7 +4,10 @@
       <ion-select-option value="Chinese">Chinese Dictionay</ion-select-option>
       <ion-select-option value="Kachin">Kachin Dictionay</ion-select-option>
     </ion-select>            
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar placeholder="Search"
+                   [(ngModel)]="queryText"
+                   (ionInput)="updateTeams($event)">
+  </ion-searchbar>
   </ion-toolbar>
 
   

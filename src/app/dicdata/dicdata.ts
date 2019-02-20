@@ -1,13 +1,13 @@
 export default[
     {
         id:1,
-        word: 'lan‧guage /ˈlæŋɡwɪdʒ/',
+        word: 'language /ˈlæŋɡwɪdʒ/',
         meaning: 'a system of communication by written or spoken words, which is used by the people of a particular country or area'
     },
 
     {
         id:2,
-        word: 'mu‧sic /ˈmjuːzɪk/',
+        word: 'music /ˈmjuːzɪk/',
         meaning: 'a series of sounds made by instruments or voices in a way that is pleasant or exciting'
     },
     {
@@ -17,17 +17,17 @@ export default[
     },
     {
         id:4,
-        word: 'Chi‧nese /ˌtʃaɪˈniːz◂/',
+        word: 'Chinese /ˌtʃaɪˈniːz◂/',
         meaning: 'the language used in China'
     },
     {
         id:5,
-        word: 'Ger‧man /ˈdʒɜːmən $ ˈdʒɜːr-/',
+        word: 'German /ˈdʒɜːmən $ ˈdʒɜːr-/',
         meaning: 'relating to Germany, its people, or its language'
     },
     {
         id:6,
-        word: 'Ger‧man‧y /ˈdʒɜːməni $ ˈdʒɜːr-/ ',
+        word: 'Germany /ˈdʒɜːməni $ ˈdʒɜːr-/ ',
         meaning: 'a country in central Europe, which was divided from 1945 until 1990 into West Germany and East Germany. Population: 81,147,265 (2014). Capital: Berlin. It is a member of the EU. Germany is a rich, advanced industrial country, known especially for its car industry, but it also has made many laws to protect the environment. Germany is also known as a country that has produced many great musicians, including Bach, Beethoven, and Wagner.'
     },
     {
@@ -47,7 +47,7 @@ export default[
     },
     {
         id:10,
-        word: 'Can‧a‧da /ˈkænədə/',
+        word: 'Canada /ˈkænədə/',
         meaning: 'a country in North America, north of the US, which is made up of ten provinces. Population: 34,568,211 (2014). Capital: Ottawa. Canada is the second largest country in the world. It is a member of the Commonwealth and it used to be part of the British Empire. Before that, part of it was governed by France, and its official languages are English and French.'
     }
 

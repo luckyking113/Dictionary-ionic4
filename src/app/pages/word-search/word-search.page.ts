@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import dicdata from '../../dicdata/dicdata';
+// import { forEach } from '@angular/router/src/utils/collection';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-word-search',
@@ -14,11 +16,17 @@ export class WordSearchPage implements OnInit {
     meaning: string,
   }[];
 
-  constructor() { }
+  queryText: '';
 
-  ngOnInit() {
-    // console.log(dicdata);
-    this.searchResults = dicdata;
+  constructor() { 
+    this.searchResults = dicdata
   }
 
+  ngOnInit() {}
+
+  updateTeams(ev){    
+    let searchword = ev.target.value;
+    let words = _.filter(dicdata, t=>(<any>t).word.toLowerCase().includes(searchword));
+    this.searchResults = words;
+  }
 }
