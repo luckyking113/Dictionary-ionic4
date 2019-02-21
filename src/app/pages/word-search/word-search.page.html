@@ -7,19 +7,42 @@
     <ion-searchbar placeholder="Search"
                    [(ngModel)]="queryText"
                    (ionInput)="updateTeams($event)">
-  </ion-searchbar>
-  </ion-toolbar>
+    </ion-searchbar>
 
-  
+    <ion-segment [(ngModel)]="page" color="primary">
+      <ion-segment-button value="English" (click)="selectedTab(0)" checked>
+        <p class="segColor">English</p>
+      </ion-segment-button>
+      <ion-segment-button value="Chinese" (click)="selectedTab(1)">
+        <p class="segColor">Chinese</p>
+      </ion-segment-button>
+      <ion-segment-button value="Kachin" (click)="selectedTab(2)">
+        <p class="segColor">Kachin</p>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+ 
 </ion-header>
 
+
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let result of searchResults">
-      <div>
-          <h3>{{result.word}}</h3>      
-          <p>{{result.meaning}}</p>
-      </div>
-    </ion-item>
-  </ion-list>
+    <ion-slides #slider>
+      <ion-slide>
+        <ion-list>
+            <ion-item *ngFor="let result of searchResults">
+              <div>
+                  <h3>{{result.word}}</h3>      
+                  <p>{{result.meaning}}</p>
+              </div>
+            </ion-item>
+          </ion-list>
+      </ion-slide>
+      <ion-slide>
+        chinese
+      </ion-slide>
+      <ion-slide>
+        Kachin
+      </ion-slide>
+    </ion-slides>
+
 </ion-content>

@@ -1,3 +1,13 @@
+$segment-button-ios-text-color: #fff !important;
+.segment-button {
+    color: $segment-button-ios-text-color;    
+}
+
+.segColor {
+    color: rgba($color: #fff, $alpha: 0.8);
+}
+
 .dicSelcet {
     width: 45%;
 }
+
