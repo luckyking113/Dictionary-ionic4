@@ -1,54 +1,80 @@
 export default[
     {
-        id:1,
-        word: 'language /ˈlæŋɡwɪdʒ/',
-        meaning: 'a system of communication by written or spoken words, which is used by the people of a particular country or area'
-    },
-
+        "id":1,
+        "searchkeyword":[
+            {
+                "word_id":1,
+                "word":"apple",                
+                "Engmeaning":"Image of apple[countable, uncountable] a hard round fruit that has red, light green, or yellow skin and is white",
+                "Chmeaning":"apple['/a/ pl] 名 苹果;似苹果之物[红脸颊等]",
+                "Kameaning":"a round fruit (usually with a green or red skin) which can be eaten",
+            },
+            {
+                "word_id":2,
+                "word":"appreciate",                
+                "Engmeaning":"[transitive] to understand how serious or important a situation or problem is or what someone’s feelings are SYN realize",
+                "Chmeaning":"appreciate [/&/ 'pr/E/ /ch/ ieit] 动 赏玩;感激;认识;抬价",
+                "Kameaning":"dankbar sein für",
+            },
+            {
+                "word_id":3,
+                "word":"apply",                
+                "Engmeaning":"to make a formal request, usually written, for something such as a job, a place at a university, or permission to do something",
+                "Chmeaning":"[/&/ 'plai] 动 适用;应用;抚;贴;涂;敷;使用",
+                "Kameaning":"auftragen",
+            }            
+        ],
+    },   
     {
-        id:2,
-        word: 'music /ˈmjuːzɪk/',
-        meaning: 'a series of sounds made by instruments or voices in a way that is pleasant or exciting'
-    },
+        "id":2,
+        "searchkeyword":[
+            {
+                "word_id":1,
+                "word":"benefit",                
+                "Engmeaning":"an advantage, improvement, or help that you get from something",
+                "Chmeaning":"['ben/&/ fit] 动 有益;享受利益;受益",
+                "Kameaning":"der Nutzen",
+            },
+            {
+                "word_id":2,
+                "word":"bring",                
+                "Engmeaning":"to take something or someone with you to the place where you are now, or to the place you are talking about → take",
+                "Chmeaning":"[bri/ng/ ] 动 携带;导致;提起[诉讼]",
+                "Kameaning":"bringen",
+            },
+            {
+                "word_id":3,
+                "word":"break",                
+                "Engmeaning":"[transitive] if you break something, you make it separate into two or more pieces, for example by hitting it, dropping it, or bending it",
+                "Chmeaning":"[breik] 动 弄伤;违背;断;使破产;损坏;闯入",
+                "Kameaning":"brechen",
+            }            
+        ],
+    },   
     {
-        id:3,
-        word: 'China /ˈmjuːzɪk/',
-        meaning: ' a hard white substance produced by baking a type of clay at a high temperature'
-    },
-    {
-        id:4,
-        word: 'Chinese /ˌtʃaɪˈniːz◂/',
-        meaning: 'the language used in China'
-    },
-    {
-        id:5,
-        word: 'German /ˈdʒɜːmən $ ˈdʒɜːr-/',
-        meaning: 'relating to Germany, its people, or its language'
-    },
-    {
-        id:6,
-        word: 'Germany /ˈdʒɜːməni $ ˈdʒɜːr-/ ',
-        meaning: 'a country in central Europe, which was divided from 1945 until 1990 into West Germany and East Germany. Population: 81,147,265 (2014). Capital: Berlin. It is a member of the EU. Germany is a rich, advanced industrial country, known especially for its car industry, but it also has made many laws to protect the environment. Germany is also known as a country that has produced many great musicians, including Bach, Beethoven, and Wagner.'
-    },
-    {
-        id:7,
-        word: 'U‧kraine /juːˈkreɪn/',
-        meaning: 'a country in eastern Europe, between Poland and Russia. Population: 44,573,205 (2014). Capital: Kiev. It was formerly part of the Soviet Union, and is now a member of the CIS. Formerly, it was sometimes referred to as ‘the Ukraine’.a series of sounds made by instruments or voices in a way that is pleasant or exciting'
-    },
-    {
-        id:8,
-        word: 'U‧kraine /juːˈkreɪn/',
-        meaning: 'a country in eastern Europe, between Poland and Russia. Population: 44,573,205 (2014). Capital: Kiev. It was formerly part of the Soviet Union, and is now a member of the CIS. Formerly, it was sometimes referred to as ‘the Ukraine’.'
-    },
-    {
-        id:9,
-        word: 'En‧gland /ˈɪŋɡlənd/',
-        meaning: 'the largest country in Britain; capital London → compare Britain, United Kingdom, the'
-    },
-    {
-        id:10,
-        word: 'Canada /ˈkænədə/',
-        meaning: 'a country in North America, north of the US, which is made up of ten provinces. Population: 34,568,211 (2014). Capital: Ottawa. Canada is the second largest country in the world. It is a member of the Commonwealth and it used to be part of the British Empire. Before that, part of it was governed by France, and its official languages are English and French.'
-    }
-
+        "id":3,
+        "searchkeyword":[
+            {
+                "word_id":1,
+                "word":"zeal",                
+                "Engmeaning":"eagerness to do something, especially to achieve a particular religious or political aim",
+                "Chmeaning":"[z/E/ l] 名 热心;热诚;热烈的勤勉",
+                "Kameaning":"der Eifer",
+            },
+            {
+                "word_id":2,
+                "word":"zoom",                
+                "Engmeaning":"[always + adverb/preposition] to go somewhere or do something very quickly SYN whizz, zip",
+                "Chmeaning":"[zu:m] 动 陡直上升;受欢迎;伸缩镜",
+                "Kameaning":"das Surren, das Brummen",
+            },
+            {
+                "word_id":3,
+                "word":"zone",                
+                "Engmeaning":"a large area that is different from other areas around it in some way",
+                "Chmeaning":"[z/O/ n] 名 地区;包裹同一邮资区域",
+                "Kameaning":"die Zone",
+            }            
+        ],
+    },     
 ];

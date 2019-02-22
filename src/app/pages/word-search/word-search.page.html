@@ -1,12 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-select placeholder="English Dictionay" class="dicSelcet">
-      <ion-select-option value="Chinese">Chinese Dictionay</ion-select-option>
-      <ion-select-option value="Kachin">Kachin Dictionay</ion-select-option>
-    </ion-select>            
+    <h3 class="titlePos">English</h3>
     <ion-searchbar placeholder="Search"
-                   [(ngModel)]="queryText"
-                   (ionInput)="updateTeams($event)">
+                   [(ngModel)]="keyword"
+                   (ionInput)="searchkeyword($event)">
     </ion-searchbar>
 
     <ion-segment [(ngModel)]="page" color="primary">
@@ -29,19 +26,33 @@
     <ion-slides #slider>
       <ion-slide>
         <ion-list>
-            <ion-item *ngFor="let result of searchResults">
+            <ion-item *ngFor="let result of allWords">
               <div>
                   <h3>{{result.word}}</h3>      
-                  <p>{{result.meaning}}</p>
+                  <p>{{result.Engmeaning}}</p>
               </div>
             </ion-item>
           </ion-list>
       </ion-slide>
       <ion-slide>
-        chinese
+        <ion-list>
+          <ion-item *ngFor="let result of allWords">
+            <div>
+                <h3>{{result.word}}</h3>      
+                <p>{{result.Chmeaning}}</p>
+            </div>
+          </ion-item>
+        </ion-list>
       </ion-slide>
       <ion-slide>
-        Kachin
+        <ion-list>
+          <ion-item *ngFor="let result of allWords">
+            <div>
+                <h3>{{result.word}}</h3>      
+                <p>{{result.Kameaning}}</p>
+            </div>
+          </ion-item>
+        </ion-list>
       </ion-slide>
     </ion-slides>
 
