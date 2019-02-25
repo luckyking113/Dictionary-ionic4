@@ -56,21 +56,21 @@ export default[
         "searchkeyword":[
             {
                 "word_id":1,
-                "word":"zeal",                
+                "word":"cool",                
                 "Engmeaning":"eagerness to do something, especially to achieve a particular religious or political aim",
                 "Chmeaning":"[z/E/ l] 名 热心;热诚;热烈的勤勉",
                 "Kameaning":"der Eifer",
             },
             {
                 "word_id":2,
-                "word":"zoom",                
+                "word":"cooperate",                
                 "Engmeaning":"[always + adverb/preposition] to go somewhere or do something very quickly SYN whizz, zip",
                 "Chmeaning":"[zu:m] 动 陡直上升;受欢迎;伸缩镜",
                 "Kameaning":"das Surren, das Brummen",
             },
             {
                 "word_id":3,
-                "word":"zone",                
+                "word":"cooperation",                
                 "Engmeaning":"a large area that is different from other areas around it in some way",
                 "Chmeaning":"[z/O/ n] 名 地区;包裹同一邮资区域",
                 "Kameaning":"die Zone",

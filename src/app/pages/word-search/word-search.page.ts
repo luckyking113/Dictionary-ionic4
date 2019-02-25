@@ -15,7 +15,7 @@ import { NavController , IonSlides } from '@ionic/angular';
 })
 export class WordSearchPage implements OnInit {
 
-  @ViewChild('slider') slider: IonSlides; 
+  @ViewChild('slider') slider: IonSlides;   
   page = 0;
   searchResults:{
     word_id: string,
@@ -29,6 +29,7 @@ export class WordSearchPage implements OnInit {
 
   constructor(public navCtrl: NavController) { 
     this.allWords = dicdata[0].searchkeyword;
+    console.log(this.allWords);
   }
 
   ngOnInit() { }
@@ -50,13 +51,18 @@ export class WordSearchPage implements OnInit {
         this.allWords = words;
       }      
     }
-    
-    // let searchword = ev.target.value;
-    // let words = _.filter(dicdata, t=>(<any>t).word.toLowerCase().includes(searchword));
-    // this.allWords = words;
   }
 
   selectedTab(index){
     this.slider.slideTo(index)
   }
+
+  toggleSection(i) {
+    this.allWords[i].open = !this.allWords[i].open;
+  }
+
+  toggleItem(i){
+    this.allWords[i].open = !this.allWords[i].open;
+  }
+
 }
