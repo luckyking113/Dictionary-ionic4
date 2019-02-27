@@ -24,8 +24,8 @@
 <ion-content no-padding class="content_container">
     <ion-slides #slider>
       <ion-slide>  
-        <div class="wordsContainer" >
-          <ion-list-header *ngFor = "let item of allWords; let i = index" no-padding flex-right>           
+        <div class="wordsContainer">                      
+          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
             <!-- <div class="wordContainer changeColor{{i}}"> -->
             <div class="wordContainer changeColor{{i}}">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
@@ -34,7 +34,7 @@
                 <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
               </ion-item>                
               <ion-item color="transparent" *ngIf="item.open" no-padding no-lines>              
-                <p class="custome_Ptag">{{item.Engmeaning}}</p>              
+                <p class="custome_Ptag">{{item.Engmeaning}}</p>                              
               </ion-item>
             </div>
           </ion-list-header>   
@@ -42,7 +42,7 @@
       </ion-slide>
       <ion-slide>  
         <div class="wordsContainer">
-          <ion-list-header *ngFor = "let item of allWords; let i = index" no-padding flex-right>           
+          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
             <div class="wordContainer changeColor1{{i}}">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
                 <h5 style="flex:1">{{item.word}}</h5>
@@ -52,7 +52,7 @@
               <ion-item color="transparent" *ngIf="item.open" no-padding no-lines>              
                 <div>
                   <p class="custome_Ptag">{{item.Chmeaning}}</p>  
-                  <p class="custome_Ptag">{{item.Engmeaning}}</p>              
+                  <p class="custome_Ptag">{{item.EngFontInCh}}</p>              
                 </div>                
               </ion-item>
             </div>
@@ -61,7 +61,7 @@
       </ion-slide>
       <ion-slide>  
         <div class="wordsContainer">
-          <ion-list-header *ngFor = "let item of allWords; let i = index" no-padding flex-right>           
+          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
             <div class="wordContainer changeColor2{{i}}">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
                 <h5 style="flex:1">{{item.word}}</h5>
@@ -70,8 +70,8 @@
               </ion-item>                
               <ion-item color="transparent" *ngIf="item.open" no-padding no-lines>    
                 <div>
-                    <p class="custome_Ptag">{{item.Kameaning}}</p>
-                    <p class="custome_Ptag">{{item.Engmeaning}}</p>              
+                  <p class="custome_Ptag">{{item.Kameaning}}</p>
+                  <p class="custome_Ptag">{{item.EngFontInKa}}</p>              
                 </div>                
               </ion-item>
             </div>

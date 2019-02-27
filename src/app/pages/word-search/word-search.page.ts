@@ -17,19 +17,24 @@ export class WordSearchPage implements OnInit {
   page = 0;
   searchResults:{
     word_id: number,
-    Eword: string,
+    word: string,
     Engmeaning: string,
-    Chimeaning: string,
-    ChForEng: string,
+    Chmeaning: string,
     Kameaning: string,
-    KaForEng: string
+    EngFontInCh: string,
+    EngFontInKa: string,
+    ChFont: string,
+    KhFont: string,
+    open:boolean,
   }[];
 
   allWords = [];  
-  keyword:string;   
+  keyword:string;       
 
   constructor(public navCtrl: NavController, public admobFree: AdMobFree,  private platform: Platform,private rd: Renderer2) { 
-    this.allWords = dicdata[0].searchkeyword;    
+    this.allWords = dicdata[0].searchkeyword;  
+    this.searchResults = this.allWords;
+    this.generateSearchData(this.allWords); //generate dic data for showing in the first screen.        
     this.getAdmobFree();
   }
 
@@ -67,19 +72,54 @@ export class WordSearchPage implements OnInit {
       }          
         
       if (ev.target.value === ''){
-        this.allWords = dicdata[0].searchkeyword;
+        this.generateSearchData(this.allWords);
       }
-      else {     
-        var searchword = ev.target.value.toLowerCase();      
-          
+      else {  
+        var searchword = ev.target.value.toLowerCase();              
         let words = _.filter(dicdata[searchIndex].searchkeyword, t=>(<any>t).word.toLowerCase().includes(searchword));
-        var katchtextforeng = words[0].Kameaning;
-        this.allWords = words;
-        console.log(katchtextforeng);
-        console.log(this.allWords);
+        this.searchResults = words;                
+        
+        for (var i=0;i<this.searchResults.length;i++){
+          this.searchResults[i].EngFontInCh = this.getEngWordsInCh(words[i].Chmeaning);
+          this.searchResults[i].EngFontInKa = this.getEngWordsInKa(words[i].Chmeaning);
+        }  
       }
     } else {      
       console.log("insert correct word");
+    }
+  }
+
+  getEngWordsInCh(words){
+    var Chmeaning = words;
+    var fullXIndex = Chmeaning.lastIndexOf("<p class='eng'>");
+    if (fullXIndex == -1) return " ";
+    else {
+      var fullengtext = Chmeaning.slice(fullXIndex, -1);
+      var xindex = fullengtext.indexOf('>');
+      var yindex = fullengtext.lastIndexOf('<');
+      var result = fullengtext.slice(xindex+1, yindex);    
+      return result;
+    }    
+  }
+
+  getEngWordsInKa(words){
+    var Kameaning = words;
+    var fullXIndex = Kameaning.lastIndexOf("<p class='eng'>");
+    if (fullXIndex == -1) return " ";
+    else {
+      var fullengtext = Kameaning.slice(fullXIndex, -1);
+      var xindex = fullengtext.indexOf('>');
+      var yindex = fullengtext.lastIndexOf('<');
+      var result = fullengtext.slice(xindex+1, yindex);    
+      return result;
+    }    
+  }
+
+  generateSearchData(searchDatas){
+    for(var i=0; i<searchDatas.length;i++){
+      this.searchResults[i].EngFontInCh = this.getEngWordsInCh(searchDatas[i].Chmeaning);
+      this.searchResults[i].EngFontInKa = this.getEngWordsInKa(searchDatas[i].Kameaning);
+      this.searchResults[i].open = false; 
     }
   }
 
@@ -87,9 +127,8 @@ export class WordSearchPage implements OnInit {
     this.slider.slideTo(index)
   }
 
-  toggleSection(i) {
-    console.log(i);
-    this.allWords[i].open = !this.allWords[i].open;
+  toggleSection(i) {   
+    this.searchResults[i].open = !this.searchResults[i].open;
     var txtForClass = "." + "changeColor" + i.toString();
     var txtForClass1 = "." + "changeColor1" + i.toString();  
     var txtForClass2 = "." + "changeColor2" + i.toString();      
@@ -97,8 +136,7 @@ export class WordSearchPage implements OnInit {
     let shadesEl=document.querySelector(txtForClass); 
     let shadesEl1=document.querySelector(txtForClass1); 
     let shadesEl2=document.querySelector(txtForClass2);    
-
-    console.log(shadesEl.classList);
+    
     if (shadesEl.classList.contains('changeColor')) {
       shadesEl.classList.remove('changeColor');
       shadesEl1.classList.remove('changeColor');
@@ -111,6 +149,7 @@ export class WordSearchPage implements OnInit {
   }
 
   toggleItem(i){
-    this.allWords[i].open = !this.allWords[i].open;
+    console.log("test toggle");
+    this.searchResults[i].open = !this.searchResults[i].open;
   }
 }
