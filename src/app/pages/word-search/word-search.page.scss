@@ -12,6 +12,10 @@ ion-item {
     --border-style: none;    
 }
 
+ion-item:hover a {
+    background-color: slategray !important;
+}
+
 .segment-button {
     color: $segment-button-ios-text-color;    
 }
@@ -35,11 +39,16 @@ ion-item {
 .wordContainer {
     width: 100%; 
     margin: 3px 0px;    
-    border-radius: 20px;  
+    border-radius: 5px; 
+    background:  white;
 }
 .custome_Ptag {
     padding-left:5px;
     font-size: 13px;    
     line-height: 1.8;
     margin-top: 0px;
+}
+
+.changeColor{
+    background-color:rgba($color:#3B83FB, $alpha: 0.8) !important;
 }
