@@ -1,5 +1,7 @@
 {
   "name": "Dictionary",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

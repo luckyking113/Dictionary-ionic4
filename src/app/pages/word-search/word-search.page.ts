@@ -2,11 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import dicdata from '../../dicdata/dicdata';
 import * as _ from 'lodash';
-import { NavController , IonSlides } from '@ionic/angular';
-// import {HttpClient} from '@angular/common/http';
-// import { Observable } from 'rxjs';
+import { NavController , IonSlides, Platform } from '@ionic/angular';
 
-
+import { AdMobFree, AdMobFreeBannerConfig} from '@ionic-native/admob-free/ngx'; 
 
 @Component({
   selector: 'app-word-search',
@@ -25,31 +23,58 @@ export class WordSearchPage implements OnInit {
     Kameaning: string,
   }[];
 
-  allWords = [];     
+  allWords = [];  
+  keyword:string;   
 
-  constructor(public navCtrl: NavController) { 
-    this.allWords = dicdata[0].searchkeyword;
-    console.log(this.allWords);
+  constructor(public navCtrl: NavController, public admobFree: AdMobFree,  private platform: Platform) { 
+    this.allWords = dicdata[0].searchkeyword;    
+    this.getAdmobFree();
+  }
+
+  getAdmobFree(){
+    if (this.platform.is('android')) {
+      console.log('this.is android');
+      let bannerConfig: AdMobFreeBannerConfig = {
+          isTesting: true, // Remove in production
+          autoShow: true,//,
+          id: 'ca-app-pub-7403328130531745~9754019527'
+      };
+      this.admobFree.banner.config(bannerConfig);
+
+      this.admobFree.banner.prepare().then(() => {
+        console.log("success get admob");
+
+      }).catch(e => alert(e));
+    } else {
+      console.log('this is ios');
+    }
   }
 
   ngOnInit() { }
 
-  searchkeyword(ev){
-    if ((ev.target.value.toLowerCase().charCodeAt(0) < 97) || (ev.target.value.toLowerCase().charCodeAt(0) > 122)){
-      console.log("insert correct word");      
-    } else {      
-      var asciicode = ev.target.value.toLowerCase().charCodeAt(0);
-      var searchIndex = asciicode - 97;    // integer for search word      
-       
+  searchkeyword(ev){    
+    //65 ~ 90  97~122  
+    
+    if (((ev.target.value.charCodeAt(0) >= 97) && (ev.target.value.charCodeAt(0) <= 122))
+        ||((ev.target.value.charCodeAt(0) >= 65) && (ev.target.value.charCodeAt(0) <= 90))){
+      var asciicode = ev.target.value.charCodeAt(0);      
+      if (asciicode > 90) {
+        var searchIndex = asciicode - 97;    // integer for search word            
+      }
+      else {
+        var searchIndex = asciicode - 65;    // integer for search word     
+      }          
+        
       if (ev.target.value === ''){
         this.allWords = dicdata[0].searchkeyword;
       }
-      else {        
-        // console.log(dicdata[searchIndex].searchkeyword);       
-        
-        let words = _.filter(dicdata[searchIndex].searchkeyword, t=>(<any>t).word.toLowerCase().includes(ev.target.value));
+      else {     
+        var searchword = ev.target.value.toLowerCase();        
+        let words = _.filter(dicdata[searchIndex].searchkeyword, t=>(<any>t).word.toLowerCase().includes(searchword));
         this.allWords = words;
-      }      
+      }
+    } else {      
+      console.log("insert correct word");
     }
   }
 

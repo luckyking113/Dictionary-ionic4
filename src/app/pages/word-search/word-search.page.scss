@@ -1,8 +1,7 @@
 $segment-button-ios-text-color: #fff !important;
 
 ion-content{
-    --ion-background-color:#d7d8da;
-    // --ion-background-color:#d7d8da;
+    --ion-background-color:#d7d8da;    
 }
 
 ion-item {    
@@ -11,10 +10,6 @@ ion-item {
     --padding-top: 2px;
     --padding-bottom: 2px;
     --border-style: none;    
-}
-
-ion-icon {
-    // margin-left:80%;
 }
 
 .segment-button {
@@ -44,8 +39,7 @@ ion-icon {
 }
 .custome_Ptag {
     padding-left:5px;
-    font-size: 13px;
-    // text-align: justify;
+    font-size: 13px;    
     line-height: 1.8;
     margin-top: 0px;
 }

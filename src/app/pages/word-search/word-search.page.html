@@ -29,8 +29,7 @@
             <div class="wordContainer">
               <ion-item color="light" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
                 <h5 style="flex:1">{{item.word}}</h5>
-                <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>
-                <!-- <ion-icon name ="arrow-forward" *ngIf="!item.open" class="ion-icon-position"></ion-icon> -->
+                <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
                 <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
               </ion-item>                
               <ion-item color="light" *ngIf="item.open" no-padding no-lines>              
