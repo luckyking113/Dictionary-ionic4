@@ -54,6 +54,17 @@ export class WordSearchPage implements OnInit {
       }).catch(e => alert(e));
     } else {
       console.log('this is ios');
+      let bannerConfig: AdMobFreeBannerConfig = {
+        isTesting: true, // Remove in production
+        autoShow: true,//,
+        id: 'ca-app-pub-7403328130531745~3025616186'
+      };
+      this.admobFree.banner.config(bannerConfig);
+
+      this.admobFree.banner.prepare().then(() => {
+        console.log("success get admob");
+
+      }).catch(e => alert(e));
     }
   }
 
@@ -80,8 +91,8 @@ export class WordSearchPage implements OnInit {
         this.searchResults = words;                
         
         for (var i=0;i<this.searchResults.length;i++){
-          this.searchResults[i].EngFontInCh = this.getEngWordsInCh(words[i].Chmeaning);
-          this.searchResults[i].EngFontInKa = this.getEngWordsInKa(words[i].Chmeaning);
+          this.searchResults[i].EngFontInCh = this.getEngWordsInCh(words[i].Chmeaning, i);
+          this.searchResults[i].EngFontInKa = this.getEngWordsInKa(words[i].Chmeaning, i);
         }  
       }
     } else {      
@@ -89,20 +100,26 @@ export class WordSearchPage implements OnInit {
     }
   }
 
-  getEngWordsInCh(words){
-    var Chmeaning = words;
-    var fullXIndex = Chmeaning.lastIndexOf("<p class='eng'>");
+  getEngWordsInCh(words, i){
+    var chfullword = words;
+    var fullXIndex = chfullword.lastIndexOf("<p class='eng'>");
+
     if (fullXIndex == -1) return " ";
     else {
-      var fullengtext = Chmeaning.slice(fullXIndex, -1);
+      var fullengtext = chfullword.slice(fullXIndex, -1);
       var xindex = fullengtext.indexOf('>');
       var yindex = fullengtext.lastIndexOf('<');
       var result = fullengtext.slice(xindex+1, yindex);    
+
+      // get chmeaning 
+      var chimeaningresult = chfullword.slice(0, fullXIndex);
+      //set chinese meaning 
+      this.searchResults[i].Chmeaning = chimeaningresult;
       return result;
-    }    
+    }
   }
 
-  getEngWordsInKa(words){
+  getEngWordsInKa(words , i){
     var Kameaning = words;
     var fullXIndex = Kameaning.lastIndexOf("<p class='eng'>");
     if (fullXIndex == -1) return " ";
@@ -111,14 +128,19 @@ export class WordSearchPage implements OnInit {
       var xindex = fullengtext.indexOf('>');
       var yindex = fullengtext.lastIndexOf('<');
       var result = fullengtext.slice(xindex+1, yindex);    
+
+      // get Kameaning 
+      var kameaningresult = Kameaning.slice(0, fullXIndex);
+      //set katch meaning 
+      this.searchResults[i].Kameaning = kameaningresult;
       return result;
     }    
   }
 
   generateSearchData(searchDatas){
     for(var i=0; i<searchDatas.length;i++){
-      this.searchResults[i].EngFontInCh = this.getEngWordsInCh(searchDatas[i].Chmeaning);
-      this.searchResults[i].EngFontInKa = this.getEngWordsInKa(searchDatas[i].Kameaning);
+      this.searchResults[i].EngFontInCh = this.getEngWordsInCh(searchDatas[i].Chmeaning, i);
+      this.searchResults[i].EngFontInKa = this.getEngWordsInKa(searchDatas[i].Kameaning, i);
       this.searchResults[i].open = false; 
     }
   }
