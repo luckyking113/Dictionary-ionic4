@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { NavController , IonSlides, Platform } from '@ionic/angular';
 
 import { AdMobFree, AdMobFreeBannerConfig} from '@ionic-native/admob-free/ngx'; 
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-word-search',
@@ -23,21 +24,27 @@ export class WordSearchPage implements OnInit {
     Kameaning: string,
     EngFontInCh: string,
     EngFontInKa: string,
-    ChFont: string,
-    KhFont: string,
     open:boolean,
   }[];
 
+  Chmeaning: string;
+  EngFontInCh:string;
+  Kameaning: string;
+  EngFontInKa: string;
+
   allWords = [];  
-  keyword:string;       
+  keyword:string;   
 
   constructor(public navCtrl: NavController, public admobFree: AdMobFree,  private platform: Platform,private rd: Renderer2) { 
-    this.allWords = dicdata[0].searchkeyword;  
-    this.searchResults = this.allWords;
-    this.generateSearchData(this.allWords); //generate dic data for showing in the first screen.        
-    this.getAdmobFree();
+    
+    //initialize dictionay data for showing after loading screen.
+    this.getDataForSearch(0, dicdata[0].searchkeyword);           
+    // console.log(this.allWords);
+    this.getAdmobFree();   
   }
 
+  ngOnInit() { }
+  
   getAdmobFree(){
     if (this.platform.is('android')) {
       console.log('this.is android');
@@ -68,10 +75,10 @@ export class WordSearchPage implements OnInit {
     }
   }
 
-  ngOnInit() { }
+ 
 
   searchkeyword(ev){    
-    //65 ~ 90  97~122      
+    //65 ~ 90  97~122             
     if (((ev.target.value.charCodeAt(0) >= 97) && (ev.target.value.charCodeAt(0) <= 122))
         ||((ev.target.value.charCodeAt(0) >= 65) && (ev.target.value.charCodeAt(0) <= 90))){
       var asciicode = ev.target.value.charCodeAt(0);      
@@ -83,66 +90,73 @@ export class WordSearchPage implements OnInit {
       }          
         
       if (ev.target.value === ''){
-        this.generateSearchData(this.allWords);
+        console.log("insert data for search");
       }
       else {  
-        var searchword = ev.target.value.toLowerCase();              
+        var searchword = ev.target.value.toLowerCase();                      
         let words = _.filter(dicdata[searchIndex].searchkeyword, t=>(<any>t).word.toLowerCase().includes(searchword));
-        this.searchResults = words;                
+        // this.allWords = words;                
         
-        for (var i=0;i<this.searchResults.length;i++){
-          this.searchResults[i].EngFontInCh = this.getEngWordsInCh(words[i].Chmeaning, i);
-          this.searchResults[i].EngFontInKa = this.getEngWordsInKa(words[i].Chmeaning, i);
-        }  
+        this.getDataForSearch(0, words);        
       }
     } else {      
       console.log("insert correct word");
-    }
-  }
-
-  getEngWordsInCh(words, i){
-    var chfullword = words;
-    var fullXIndex = chfullword.lastIndexOf("<p class='eng'>");
-
-    if (fullXIndex == -1) return " ";
-    else {
-      var fullengtext = chfullword.slice(fullXIndex, -1);
-      var xindex = fullengtext.indexOf('>');
-      var yindex = fullengtext.lastIndexOf('<');
-      var result = fullengtext.slice(xindex+1, yindex);    
-
-      // get chmeaning 
-      var chimeaningresult = chfullword.slice(0, fullXIndex);
-      //set chinese meaning 
-      this.searchResults[i].Chmeaning = chimeaningresult;
-      return result;
-    }
-  }
-
-  getEngWordsInKa(words , i){
-    var Kameaning = words;
-    var fullXIndex = Kameaning.lastIndexOf("<p class='eng'>");
-    if (fullXIndex == -1) return " ";
-    else {
-      var fullengtext = Kameaning.slice(fullXIndex, -1);
-      var xindex = fullengtext.indexOf('>');
-      var yindex = fullengtext.lastIndexOf('<');
-      var result = fullengtext.slice(xindex+1, yindex);    
-
-      // get Kameaning 
-      var kameaningresult = Kameaning.slice(0, fullXIndex);
-      //set katch meaning 
-      this.searchResults[i].Kameaning = kameaningresult;
-      return result;
     }    
   }
 
-  generateSearchData(searchDatas){
-    for(var i=0; i<searchDatas.length;i++){
-      this.searchResults[i].EngFontInCh = this.getEngWordsInCh(searchDatas[i].Chmeaning, i);
-      this.searchResults[i].EngFontInKa = this.getEngWordsInKa(searchDatas[i].Kameaning, i);
-      this.searchResults[i].open = false; 
+  getEngWordsInCh(words){    
+    var fullXIndex = words.lastIndexOf("<p class='eng'>");
+
+    if (fullXIndex == -1) this.EngFontInCh = "";
+    else {
+      var fullengtext = words.slice(fullXIndex, -1);
+      var xindex = fullengtext.indexOf('>');
+      var yindex = fullengtext.lastIndexOf('<');
+      this.EngFontInCh= fullengtext.slice(xindex+1, yindex);    
+
+      // get chmeaning 
+      this.Chmeaning = words.slice(0, fullXIndex);    
     }
+  }
+
+  getEngWordsInKa(words){
+    var fullXIndex = words.lastIndexOf("<p class='eng'>");
+    if (fullXIndex == -1) return " ";
+    else {
+      var fullengtext = words.slice(fullXIndex, -1);
+      var xindex = fullengtext.indexOf('>');
+      var yindex = fullengtext.lastIndexOf('<');
+      this.EngFontInKa = fullengtext.slice(xindex+1, yindex);    
+
+      // get Kameaning 
+      this.Kameaning = words.slice(0, fullXIndex);
+     
+    }    
+  }
+
+  getDataForSearch(index, dataArray){
+    var loopCount = 0;
+    if (dataArray.length > 20) loopCount = 20;
+    else loopCount = dataArray.length;    
+
+    this.allWords = Array();
+
+    for (var i = index; i < loopCount; i++){      
+      this.getEngWordsInCh(dataArray[i].Chmeaning);
+      this.getEngWordsInKa(dataArray[i].Kameaning);
+
+      //initialize dictionay data for showing after loading screen.
+      let element = [];
+      element["word_id"] = dataArray[i].word_id;
+      element["word"] = dataArray[i].word;
+      element["Engmeaning"] = dataArray[i].Engmeaning;      
+      element["Chmeaning"] = this.Chmeaning;
+      element["Kameaning"] = this.Kameaning;
+      element["EngFontInCh"] = this.EngFontInCh;       
+      element["EngFontInKa"] = this.EngFontInKa;
+      element["open"] = false;
+      this.allWords[i] = element;       
+    }      
   }
 
   selectedTab(index){
@@ -150,7 +164,7 @@ export class WordSearchPage implements OnInit {
   }
 
   toggleSection(i) {   
-    this.searchResults[i].open = !this.searchResults[i].open;
+    this.allWords[i].open = !this.allWords[i].open;
     var txtForClass = "." + "changeColor" + i.toString();
     var txtForClass1 = "." + "changeColor1" + i.toString();  
     var txtForClass2 = "." + "changeColor2" + i.toString();      
@@ -172,6 +186,6 @@ export class WordSearchPage implements OnInit {
 
   toggleItem(i){
     console.log("test toggle");
-    this.searchResults[i].open = !this.searchResults[i].open;
+    this.allWords[i].open = !this.allWords[i].open;
   }
 }
