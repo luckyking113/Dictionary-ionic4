@@ -3,9 +3,7 @@ import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import dicdata from '../../dicdata/dicdata';
 import * as _ from 'lodash';
 import { NavController , IonSlides, Platform } from '@ionic/angular';
-
 import { AdMobFree, AdMobFreeBannerConfig} from '@ionic-native/admob-free/ngx'; 
-import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-word-search',
@@ -33,7 +31,7 @@ export class WordSearchPage implements OnInit {
   EngFontInKa: string;
 
   allWords = [];  
-  keyword:string;   
+  keyword:string;     
 
   constructor(public navCtrl: NavController, public admobFree: AdMobFree,  private platform: Platform,private rd: Renderer2) { 
     
@@ -94,19 +92,59 @@ export class WordSearchPage implements OnInit {
       }
       else {  
         var searchword = ev.target.value.toLowerCase();                      
-        let words = _.filter(dicdata[searchIndex].searchkeyword, t=>(<any>t).word.toLowerCase().includes(searchword));
-        // this.allWords = words;                
+        let words = this.getSearchResults(searchIndex, searchword);
         
-        this.getDataForSearch(0, words);        
+        this.getDataForSearch(0, words); 
+        // _.filter(dicdata[searchIndex].searchkeyword, t=>(<any>t).word.toLowerCase().includes(searchword));                                     
+        
       }
     } else {      
       console.log("insert correct word");
     }    
   }
 
-  getEngWordsInCh(words){    
-    var fullXIndex = words.lastIndexOf("<p class='eng'>");
+  getSearchResults(searchIndex, searchword){    
+    let words = Array();
+    var count = dicdata[searchIndex].searchkeyword.length;
+    var loopCount = 0;
+    for (var i = 0; i<count;i++){
+      if (dicdata[searchIndex].searchkeyword[i].word.toLowerCase().includes(searchword)) {
+        if (loopCount<20) {
+          words.push(dicdata[searchIndex].searchkeyword[i]);        
+          loopCount = loopCount + 1;
+        }
+        else break;
+      }      
+    }    
+    return words;     
+  }
 
+  getDataForSearch(index, dataArray){    
+    var loopCount = 0;
+    if (dataArray.length > 100) loopCount = 15;
+    else loopCount = dataArray.length;    
+
+    this.allWords = Array();    
+    for (var i = index; i < loopCount; i++){            
+      this.getEngWordsInCh(dataArray[i].Chmeaning);
+      this.getEngWordsInKa(dataArray[i].Kameaning);
+
+      //initialize dictionay data for showing after loading screen.
+      let element = [];
+      element["word_id"] = dataArray[i].word_id;
+      element["word"] = dataArray[i].word;
+      element["Engmeaning"] = dataArray[i].Engmeaning;      
+      element["Chmeaning"] = this.Chmeaning;
+      element["Kameaning"] = this.Kameaning;
+      element["EngFontInCh"] = this.EngFontInCh;       
+      element["EngFontInKa"] = this.EngFontInKa;
+      element["open"] = false;
+      this.allWords[i] = element;       
+    }      
+  }
+
+  getEngWordsInCh(words){        
+    var fullXIndex = words.lastIndexOf("<p class='eng'>");
     if (fullXIndex == -1) this.EngFontInCh = "";
     else {
       var fullengtext = words.slice(fullXIndex, -1);
@@ -129,34 +167,8 @@ export class WordSearchPage implements OnInit {
       this.EngFontInKa = fullengtext.slice(xindex+1, yindex);    
 
       // get Kameaning 
-      this.Kameaning = words.slice(0, fullXIndex);
-     
+      this.Kameaning = words.slice(0, fullXIndex);     
     }    
-  }
-
-  getDataForSearch(index, dataArray){
-    var loopCount = 0;
-    if (dataArray.length > 20) loopCount = 20;
-    else loopCount = dataArray.length;    
-
-    this.allWords = Array();
-
-    for (var i = index; i < loopCount; i++){      
-      this.getEngWordsInCh(dataArray[i].Chmeaning);
-      this.getEngWordsInKa(dataArray[i].Kameaning);
-
-      //initialize dictionay data for showing after loading screen.
-      let element = [];
-      element["word_id"] = dataArray[i].word_id;
-      element["word"] = dataArray[i].word;
-      element["Engmeaning"] = dataArray[i].Engmeaning;      
-      element["Chmeaning"] = this.Chmeaning;
-      element["Kameaning"] = this.Kameaning;
-      element["EngFontInCh"] = this.EngFontInCh;       
-      element["EngFontInKa"] = this.EngFontInKa;
-      element["open"] = false;
-      this.allWords[i] = element;       
-    }      
   }
 
   selectedTab(index){
@@ -188,4 +200,8 @@ export class WordSearchPage implements OnInit {
     console.log("test toggle");
     this.allWords[i].open = !this.allWords[i].open;
   }
+
+  // showMoreResult(){
+  //   console.log("showMoreIndex");         
+  // }
 }
