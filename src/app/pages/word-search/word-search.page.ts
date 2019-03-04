@@ -4,6 +4,7 @@ import dicdata from '../../dicdata/dicdata';
 import * as _ from 'lodash';
 import { NavController , IonSlides, Platform } from '@ionic/angular';
 import { AdMobFree, AdMobFreeBannerConfig} from '@ionic-native/admob-free/ngx'; 
+import { DicdatabaseService } from '../../services/dicdatabase.service';
 
 @Component({
   selector: 'app-word-search',
@@ -33,19 +34,31 @@ export class WordSearchPage implements OnInit {
   allWords = [];  
   keyword:string;     
 
-  constructor(public navCtrl: NavController, public admobFree: AdMobFree,  private platform: Platform,private rd: Renderer2) { 
+  testDicData = [];
+  testDicDatum = [];
+
+  constructor(public navCtrl: NavController,private dicdatabaseService: DicdatabaseService, public admobFree: AdMobFree,  private platform: Platform,private rd: Renderer2) { 
     
     //initialize dictionay data for showing after loading screen.
     this.getDataForSearch(0, dicdata[0].searchkeyword);           
     // console.log(this.allWords);
-    this.getAdmobFree();   
+    this.getAdmobFree();  
+    
+    // this.dicdatabaseService.getDatabaseState().subscribe(ready => {
+    //   if (ready) {
+    //     this.loadDicData();
+    //   }
+    // });
   }
+
+  // loadDicData(){
+  //   this.testDicData.push(this.dicdatabaseService.getAllWords());    
+  // }
 
   ngOnInit() { }
   
   getAdmobFree(){
-    if (this.platform.is('android')) {
-      console.log('this.is android');
+    if (this.platform.is('android')) {      
       let bannerConfig: AdMobFreeBannerConfig = {
           isTesting: true, // Remove in production
           autoShow: true,//,
@@ -53,12 +66,9 @@ export class WordSearchPage implements OnInit {
       };
       this.admobFree.banner.config(bannerConfig);
 
-      this.admobFree.banner.prepare().then(() => {
-        console.log("success get admob");
-
+      this.admobFree.banner.prepare().then(() => {       
       }).catch(e => alert(e));
-    } else {
-      console.log('this is ios');
+    } else {      
       let bannerConfig: AdMobFreeBannerConfig = {
         isTesting: true, // Remove in production
         autoShow: true,//,
@@ -67,8 +77,6 @@ export class WordSearchPage implements OnInit {
       this.admobFree.banner.config(bannerConfig);
 
       this.admobFree.banner.prepare().then(() => {
-        console.log("success get admob");
-
       }).catch(e => alert(e));
     }
   }
