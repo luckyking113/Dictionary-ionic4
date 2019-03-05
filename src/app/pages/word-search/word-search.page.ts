@@ -79,9 +79,7 @@ export class WordSearchPage implements OnInit {
       this.admobFree.banner.prepare().then(() => {
       }).catch(e => alert(e));
     }
-  }
-
- 
+  } 
 
   searchkeyword(ev){    
     //65 ~ 90  97~122             

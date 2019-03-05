@@ -1,22 +1,24 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <h3 class="titlePos">English</h3>
+  <ion-toolbar>    
     <ion-searchbar placeholder="Search"
                    [(ngModel)]="keyword"
-                   (ionInput)="searchkeyword($event)">
+                   (ionInput)="searchkeyword($event)"
+                   class="searchBar">
     </ion-searchbar>
 
-    <ion-segment [(ngModel)]="page" color="primary">
-      <ion-segment-button value="English" (click)="selectedTab(0)" checked>
-        <p class="segColor">English</p>
-      </ion-segment-button>
-      <ion-segment-button value="Chinese" (click)="selectedTab(1)">
-        <p class="segColor">Chinese</p>
-      </ion-segment-button>
-      <ion-segment-button value="Kachin" (click)="selectedTab(2)">
-        <p class="segColor">Kachin</p>
-      </ion-segment-button>
-    </ion-segment>
+    <div class="segPadding">
+      <ion-segment [(ngModel)]="page" class="ion_segment">
+        <ion-segment-button value="English" (click)="selectedTab(0)" checked>
+          <p class="segColor">English</p>
+        </ion-segment-button>
+        <ion-segment-button value="Chinese" (click)="selectedTab(1)">
+          <p class="segColor">Chinese</p>
+        </ion-segment-button>
+        <ion-segment-button value="Kachin" (click)="selectedTab(2)">
+          <p class="segColor">Kachin</p>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
   </ion-toolbar> 
 </ion-header>
 
@@ -27,7 +29,7 @@
         <div class="wordsContainer">                      
           <ion-list-header *ngFor = "let item of allWords; let i = index" no-padding flex-right>           
             <!-- <div class="wordContainer changeColor{{i}}"> -->
-            <div class="wordContainer changeColor{{i}}">
+            <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
                 <h5 style="flex:1">{{item.word}}</h5>
                 <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                

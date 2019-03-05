@@ -32,19 +32,16 @@ export class DicdatabaseService {
     // } else if(this.platform.is('android')){
     //   this.file.externalDataDirectory
     // }    
+    let options = { name: 'DicData.db', location: 'default', createFromLocation: 1 };
     this.platform.ready().then(() => {  
       this.sqlite.create({
         name:'DicData.db',
         location: 'default',
+        createFromLocation: 1,
       })      
       .then((db:SQLiteObject) => {             
-        this.database = db;
-        this.getAllWords();
-        // this.database.executeSql('SELECT * FROM DicData', [])
-        // .then(
-        //   res => console.log('Executed SQL')          
-        // )
-        // .catch(e => console.log(e));               
+        this.database = db;        
+        this.getAllWords();        
       })
     });
   }
