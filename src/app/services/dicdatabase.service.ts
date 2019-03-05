@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { SQLiteObject, SQLite } from '@ionic-native/sqlite/ngx';
 import { Http } from '@angular/http';
 import { BehaviorSubject } from 'rxjs';
-import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-import { Storage } from '@ionic/storage';
+// import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
+// import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 // import { map } from 'rxjs/operators';
-
+import { File } from '@ionic-native/file/ngx';
 
 
 @Injectable({
@@ -16,15 +16,22 @@ export class DicdatabaseService {
 
   database: SQLiteObject;
   private databaseReady: BehaviorSubject<boolean>;  
+  // databaseDirectory:any;
 
   constructor(
     public http:Http, 
-    private sqlitePorter: SQLitePorter, 
-    private storage:Storage,
+    // private sqlitePorter: SQLitePorter, 
+    // private storage:Storage,
     private sqlite:SQLite, 
-    private platform:Platform ) 
+    private platform:Platform,
+    public file: File) 
   { 
-    this.databaseReady = new BehaviorSubject(false);    
+    this.databaseReady = new BehaviorSubject(false); 
+    // if(this.platform.is('ios')){
+    //   this.file.documentsDirectory;
+    // } else if(this.platform.is('android')){
+    //   this.file.externalDataDirectory
+    // }    
     this.platform.ready().then(() => {  
       this.sqlite.create({
         name:'DicData.db',
@@ -32,13 +39,12 @@ export class DicdatabaseService {
       })      
       .then((db:SQLiteObject) => {             
         this.database = db;
-        let testdic = this.getAllWords();
+        this.getAllWords();
         // this.database.executeSql('SELECT * FROM DicData', [])
         // .then(
         //   res => console.log('Executed SQL')          
         // )
-        // .catch(e => console.log(e));
-               
+        // .catch(e => console.log(e));               
       })
     });
   }
