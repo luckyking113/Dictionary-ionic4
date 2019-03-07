@@ -10,6 +10,17 @@ import { DicdatabaseService } from '../../services/dicdatabase.service';
   styleUrls: ['./word-search.page.scss'],
 })
 export class WordSearchPage implements OnInit {
+  public noResult = [
+    {
+      content: 'No Result',      
+    },
+    {
+      content: 'No Result',      
+    },
+    {
+      content: 'No Result',     
+    },
+  ];
 
   @ViewChild('slider') slider: IonSlides;    
   
@@ -25,7 +36,7 @@ export class WordSearchPage implements OnInit {
   keyword:string;     
   favoriteIcon: string;
   visible: boolean;
-  // star-half
+  resultCompare:boolean = true;
 
   constructor(public navCtrl: NavController,public admobFree: AdMobFree, 
     private platform: Platform, private DicData: DicdatabaseService ) { 
@@ -54,7 +65,9 @@ export class WordSearchPage implements OnInit {
       }         
 
       var searchword = ev.target.value.toLowerCase();                      
-      this.searchResults = this.DicData.getSearchResults(searchIndex, searchword);              
+      this.searchResults = this.DicData.getSearchResults(searchIndex, searchword);   
+      if (this.searchResults.length == 0 ) {this.resultCompare = false}
+      else this.resultCompare = true;          
 
     } else {      
       this.searchResults = this.initialResults;
@@ -78,6 +91,7 @@ export class WordSearchPage implements OnInit {
     var txtToAddClass = "."+"iconIndex"+i.toString();
     var txtToAddClass1 = "."+"iconIndex3"+i.toString();
     var txtToAddClass2 = "."+"iconIndex2"+i.toString();
+    this.searchResults[i].open = !this.searchResults[i].open;  
 
     let shadesEl = document.querySelector(txtToAddClass);
     let shadesEl3 = document.querySelector(txtToAddClass1);

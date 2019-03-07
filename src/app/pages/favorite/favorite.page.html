@@ -23,18 +23,17 @@
 </ion-header>
 
 <ion-content no-padding class="content_container">
-    <ion-slides #slider *ngIf = "!resultCompare; else wow">
+    <ion-slides #slider *ngIf = "!resultCompare; else show_Result">
       <ion-slide *ngFor="let item of noResult"> 
         <ion-item>{{item.content}}</ion-item>
       </ion-slide>    
     </ion-slides> 
     
-    <ng-template #wow>
+    <ng-template #show_Result>
     <ion-slides #slider >
       <ion-slide>                             
         <div class="wordsContainer">                      
-          <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>           
-            <!-- <div class="wordContainer changeColor{{i}}"> -->
+          <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>                       
             <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
                 <h5 style="flex:1">{{item.word}}</h5>

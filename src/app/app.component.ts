@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private DicData: DicdatabaseService
+    private DicData: DicdatabaseService,
   ) {
     this.initializeApp();
   }
