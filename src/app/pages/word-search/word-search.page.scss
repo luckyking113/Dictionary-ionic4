@@ -29,10 +29,11 @@ ion-item {
 ion-segment-button{
     --border-color: 5px solid red;
     --background-checked:#017AFE;    
+    --background-hover:#017AFE;
     --border-width:2px;
     --border-color:#017AFE;
     --color:#017AFE;
-    --color-checked:rgb(139, 188, 240);
+    --color-checked:white;
     --margin-bottom:0px ;
     min-height: 27px;
     
@@ -41,6 +42,12 @@ ion-segment-button{
 ion-segment{
     --margin-end:1%;
     --margin-start:1%;  
+}
+
+.sidebar_btn{
+    background:white;
+    height: 42px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);    
 }
 
 .searchBar{
@@ -104,6 +111,10 @@ ion-segment{
     font-size: 13px;    
     line-height: 1.5;
     margin-top: 0px;
+}
+
+.changeStarColor{
+    // background-color: red;
 }
 
 // .changeColor{

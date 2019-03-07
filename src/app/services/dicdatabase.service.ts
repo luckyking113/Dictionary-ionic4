@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SQLiteObject, SQLite } from '@ionic-native/sqlite/ngx';
-import { Http } from '@angular/http';
-import { BehaviorSubject } from 'rxjs';
-// import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-// import { Storage } from '@ionic/storage';
-import { Platform } from '@ionic/angular';
-// import { map } from 'rxjs/operators';
-import { File } from '@ionic-native/file/ngx';
+import dicdata from '../dicdata/dicdata';
 
 
 @Injectable({
@@ -14,74 +7,112 @@ import { File } from '@ionic-native/file/ngx';
 })
 export class DicdatabaseService {
 
-  database: SQLiteObject;
-  private databaseReady: BehaviorSubject<boolean>;  
-  // databaseDirectory:any;
+  Chmeaning: string;
+  EngFontInCh:string;
+  Kameaning: string;
+  EngFontInKa: string;
 
-  constructor(
-    public http:Http, 
-    // private sqlitePorter: SQLitePorter, 
-    // private storage:Storage,
-    private sqlite:SQLite, 
-    private platform:Platform,
-    public file: File) 
-  { 
-    this.databaseReady = new BehaviorSubject(false); 
-    // if(this.platform.is('ios')){
-    //   this.file.documentsDirectory;
-    // } else if(this.platform.is('android')){
-    //   this.file.externalDataDirectory
-    // }    
-    let options = { name: 'DicData.db', location: 'default', createFromLocation: 1 };
-    this.platform.ready().then(() => {  
-      this.sqlite.create({
-        name:'DicData.db',
-        location: 'default',
-        createFromLocation: 1,
-      })      
-      .then((db:SQLiteObject) => {             
-        this.database = db;        
-        this.getAllWords();        
-      })
-    });
+  allWords = [];  
+  allDicData = [];
+
+
+  constructor(){
+    this.allDicData = dicdata;
+    this.initDataForSearch();  
   }
 
-  // fillDatabase(){    
-  //   this.database.executeSql('CREATE TABLE IF NOT EXISTS DicData(id INTEGER PRIMARY KEY)', [])
-  //   .then(res => res.console.log(res));
-  //   // this.http.get('assets/DicData.sql')
-  //   // .pipe(
-  //   //   map(res => res.text())
-  //   // )
-  //   // .subscribe(sql => {
-  //   //   this.sqlitePorter.importSqlToDb(this.database,sql)
-  //   //   .then(data => {
-  //   //     this.databaseReady.next(true);
-  //   //     this.storage.set('database_filled',true);
-  //   //   })
-  //   //   .catch(e=>console.log(e));
-  //   // })
-  // }
+  initDataForSearch(){     
+    let dataArray = this.allDicData[0].searchkeyword;   
+    var loopCount = 0;
+    if (dataArray.length > 100) loopCount = 15;
+    else loopCount = dataArray.length;    
 
-  getAllWords(){    
-    // return this.database.executeSql("SELECT * FROM DicData", []).then(data => {
-    return this.database.executeSql('SELECT * FROM DicData', []).then(data => {
-      let dicData = [];
-      if (data.rows.length > 0) {
-        for (var i = 0; i<data.rows.length;i++){
-          dicData.push({id:data.rows.item(i).id});
-          // dicData.push({id:data.rows.item(i).id, word:data.rows.item(i).word,Enmeaning:data.rows.item(i).Enmeaning,Chmeaning:data.rows.item(i).Chmeaning,Kameaning:data.rows.item(i).Kameaning,searchkeyword:data.rows.item(i).searchkeyword,})
+    this.allWords = Array();    
+    for (var i = 0; i < loopCount; i++){            
+      this.getEngWordsInCh(dataArray[i].Chmeaning);
+      this.getEngWordsInKa(dataArray[i].Kameaning);
+
+      //initialize dictionay data for showing after loading screen.
+      let element = [];
+      element["word_id"] = dataArray[i].word_id;
+      element["word"] = dataArray[i].word;
+      element["Engmeaning"] = dataArray[i].Engmeaning;      
+      element["Chmeaning"] = this.Chmeaning;
+      element["Kameaning"] = this.Kameaning;
+      element["EngFontInCh"] = this.EngFontInCh;       
+      element["EngFontInKa"] = this.EngFontInKa;
+      element["open"] = false;
+      this.allWords[i] = element;       
+    }   
+    return this.allWords;   
+  }
+
+  getSearchResults(searchIndex, searchword){    
+    let words = Array();
+    var count = this.allDicData[searchIndex].searchkeyword.length;
+    var loopCount = 0;
+    for (var i = 0; i<count;i++){
+      if (this.allDicData[searchIndex].searchkeyword[i].word.toLowerCase().includes(searchword)) {
+        if (loopCount<20) {
+          words.push(this.allDicData[searchIndex].searchkeyword[i]);        
+          loopCount = loopCount + 1;
         }
-      }
-      console.log(dicData);
-      return dicData;
-    }), err => {
-      console.log('Error: ', err);
-      return [];
+        else break;
+      }      
+    }        
+    return this.getDataForSearch(0, words);    
+  }
+
+  getDataForSearch(index, dataArray){        
+    var loopCount = 0;
+    if (dataArray.length > 100) loopCount = 15;
+    else loopCount = dataArray.length;    
+
+    this.allWords = Array();    
+    for (var i = index; i < loopCount; i++){            
+      this.getEngWordsInCh(dataArray[i].Chmeaning);
+      this.getEngWordsInKa(dataArray[i].Kameaning);
+
+      //initialize dictionay data for showing after loading screen.
+      let element = [];
+      element["word_id"] = dataArray[i].word_id;
+      element["word"] = dataArray[i].word;
+      element["Engmeaning"] = dataArray[i].Engmeaning;      
+      element["Chmeaning"] = this.Chmeaning;
+      element["Kameaning"] = this.Kameaning;
+      element["EngFontInCh"] = this.EngFontInCh;       
+      element["EngFontInKa"] = this.EngFontInKa;
+      element["open"] = false;
+      this.allWords[i] = element;       
+    }   
+    return this.allWords;   
+  }
+
+  getEngWordsInCh(words){        
+    var fullXIndex = words.lastIndexOf("<p class='eng'>");
+    if (fullXIndex == -1) this.EngFontInCh = "";
+    else {
+      var fullengtext = words.slice(fullXIndex, -1);
+      var xindex = fullengtext.indexOf('>');
+      var yindex = fullengtext.lastIndexOf('<');
+      this.EngFontInCh= fullengtext.slice(xindex+1, yindex);    
+
+      // get chmeaning 
+      this.Chmeaning = words.slice(0, fullXIndex);    
     }
   }
 
-  getDatabaseState(){
-    return this.databaseReady.asObservable();
+  getEngWordsInKa(words){
+    var fullXIndex = words.lastIndexOf("<p class='eng'>");
+    if (fullXIndex == -1) return " ";
+    else {
+      var fullengtext = words.slice(fullXIndex, -1);
+      var xindex = fullengtext.indexOf('>');
+      var yindex = fullengtext.lastIndexOf('<');
+      this.EngFontInKa = fullengtext.slice(xindex+1, yindex);    
+
+      // get Kameaning 
+      this.Kameaning = words.slice(0, fullXIndex);     
+    }    
   }
 }
