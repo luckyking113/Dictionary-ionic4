@@ -11,7 +11,7 @@
       <ion-content>
           <ion-list>
             <ion-menu-toggle *ngFor = "let p of appPages">
-              <ion-item>
+              <ion-item [routerLink]="p.url" [routerDirection]="'root'">
                 <ion-icon slot="start" [name]="p.icon"></ion-icon>
                 <ion-label class="label_border">{{p.title}}</ion-label>
               </ion-item>

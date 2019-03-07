@@ -22,8 +22,13 @@ export class WordSearchPage implements OnInit {
   searchResults = [];    
   initialResults = [];
   keyword:string;     
+  favoriteIcon: string;
+  visible: boolean;
+  // star-half
 
   constructor(public navCtrl: NavController,public admobFree: AdMobFree,  private platform: Platform, private DicData: DicdatabaseService ) { 
+    this.favoriteIcon = 'star-outline';
+    this.visible = false;
     this.searchResults = this.DicData.initDataForSearch(); 
     this.initialResults = this.searchResults;      
     this.getAdmobFree();      
@@ -59,14 +64,29 @@ export class WordSearchPage implements OnInit {
     this.searchResults[i].open = !this.searchResults[i].open;   
   }
 
-  toggleFavorite(i){
-    this.searchResults[i].open = !this.searchResults[i].open;    
-  }
-
   toggleItem(i){    
     this.searchResults[i].open = !this.searchResults[i].open;
   }
 
+  
+  toggleFavorite(i){
+    if (this.visible){      
+      this.favoriteIcon = 'star-outline';            
+      this.DicData.deleteFavoriteData(this.searchResults[i]);
+      this.visible = !this.visible;   
+      console.log('delete')    ;      
+    }
+    else {      
+      this.favoriteIcon = 'star-half';       
+      this.DicData.saveFavoriteData(this.searchResults[i]);
+      this.visible = !this.visible;        
+      console.log('save');
+    }
+  }
+
+  // toggleIcon(i){
+
+  // }
     
   getAdmobFree(){
     if (this.platform.is('android')) {      

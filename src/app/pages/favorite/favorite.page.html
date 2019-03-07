@@ -1,45 +1,42 @@
-<!-- <ion-splite-pane>
-<ion-menu> -->
 <ion-header>
-  <ion-toolbar>   
-    <ion-searchbar placeholder="Search"
-                   [(ngModel)]="keyword"
-                   (ionInput)="searchkeyword($event)"
-                   class="searchBar">
-      <ion-buttons class="sidebar_btn" slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-searchbar>
-  
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+
+      </ion-menu-button>
+    </ion-buttons>
+    
     <div class="segPadding">
-      <ion-segment [(ngModel)]="page" class="ion_segment">
-        <ion-segment-button value="English" (click)="selectedTab(0)" checked>
-          <p class="segColor">English</p>
-        </ion-segment-button>
-        <ion-segment-button value="Chinese" (click)="selectedTab(1)">
-          <p class="segColor">Chinese</p>
-        </ion-segment-button>
-        <ion-segment-button value="Kachin" (click)="selectedTab(2)">
-          <p class="segColor">Kachin</p>
-        </ion-segment-button>
-      </ion-segment>
-    </div>
-  </ion-toolbar> 
+        <ion-segment [(ngModel)]="page" class="ion_segment">
+          <ion-segment-button value="English" (click)="selectedTab(0)" checked>
+            <p class="segColor">English</p>
+          </ion-segment-button>
+          <ion-segment-button value="Chinese" (click)="selectedTab(1)">
+            <p class="segColor">Chinese</p>
+          </ion-segment-button>
+          <ion-segment-button value="Kachin" (click)="selectedTab(2)">
+            <p class="segColor">Kachin</p>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+  </ion-toolbar>
 </ion-header>
 
-
 <ion-content no-padding class="content_container">
-    <ion-slides #slider>
-      <ion-slide>  
+    <ion-slides #slider *ngIf = "!resultCompare; else wow">
+      <ion-slide *ngFor="let item of noResult"> 
+        <ion-item>{{item.content}}</ion-item>
+      </ion-slide>    
+    </ion-slides> 
+    
+    <ng-template #wow>
+    <ion-slides #slider >
+      <ion-slide>                             
         <div class="wordsContainer">                      
-          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
+          <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>           
             <!-- <div class="wordContainer changeColor{{i}}"> -->
             <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
-                <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
-                  <ion-icon class = "favoriteIconSize" [name]="favoriteIcon"></ion-icon>                  
-                </button>               
-               
                 <h5 style="flex:1">{{item.word}}</h5>
                 <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
                 <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
@@ -51,14 +48,12 @@
           </ion-list-header>   
         </div>   
       </ion-slide>
+
       <ion-slide>  
         <div class="wordsContainer">
-          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
+          <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>           
             <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
-                <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
-                  <ion-icon class = "favoriteIconSize" [name]="favoriteIcon"></ion-icon>                  
-                </button>                
                 <h5 style="flex:1">{{item.word}}</h5>
                 <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
                 <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
@@ -73,9 +68,10 @@
           </ion-list-header>   
         </div>   
       </ion-slide>
+
       <ion-slide>  
         <div class="wordsContainer">
-          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
+          <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>           
             <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
                 <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
@@ -96,7 +92,5 @@
         </div>   
       </ion-slide>
     </ion-slides>  
+  </ng-template>     
 </ion-content>
-<!-- </ion-menu>
-
-</ion-splite-pane> -->

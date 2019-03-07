@@ -18,17 +18,17 @@ export class AppComponent {
     },
     {
       title: 'Favorites',
-      url: '/favorites',
+      url: '/favorite',
       icon: 'star-half'
     },
     {
       title: 'Settings',
-      url: '/Settings',
+      url: '',
       icon: 'settings'
     },
     {
       title: 'About',
-      url: '/Settings',
+      url: '',
       icon: 'information-circle-outline'
     },
   ];

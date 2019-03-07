@@ -14,6 +14,7 @@ export class DicdatabaseService {
 
   allWords = [];  
   allDicData = [];
+  favoriteData = [];
 
 
   constructor(){
@@ -114,5 +115,23 @@ export class DicdatabaseService {
       // get Kameaning 
       this.Kameaning = words.slice(0, fullXIndex);     
     }    
+  }
+
+  saveFavoriteData(data){
+    this.favoriteData.push(data);
+    console.log(this.favoriteData);
+  }
+
+  deleteFavoriteData(data){
+    let tempData = Array();
+    for (var i = 0; i < this.favoriteData.length; i++){
+      if (this.favoriteData[i].word == data.word){
+        continue;
+      }
+      else tempData.push(this.favoriteData[i]);
+    }
+    this.favoriteData = Array();
+    this.favoriteData = tempData;
+    console.log(this.favoriteData);
   }
 }
