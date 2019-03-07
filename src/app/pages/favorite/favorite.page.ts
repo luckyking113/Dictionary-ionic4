@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController , IonSlides } from '@ionic/angular';
 import { DicdatabaseService } from '../../services/dicdatabase.service';
 
@@ -7,7 +7,7 @@ import { DicdatabaseService } from '../../services/dicdatabase.service';
   templateUrl: './favorite.page.html',
   styleUrls: ['./favorite.page.scss'],
 })
-export class FavoritePage implements OnInit {
+export class FavoritePage {
 
   @ViewChild('slider') slider: IonSlides;        
 
@@ -23,7 +23,6 @@ export class FavoritePage implements OnInit {
     },
   ];
 
-  favorites = [];
   favoriteIcon: string;
   visible: boolean;
   resultCompare:boolean;
@@ -31,11 +30,9 @@ export class FavoritePage implements OnInit {
 
 
   constructor(public navCtrl: NavController, private DicData: DicdatabaseService ) {        
-    if (this.DicData.favoriteData.length > 0 ) {
-      this.favorites = this.DicData.favoriteData;  
-      this.resultCompare = true;
-      this.favoritesData = this.DicData.favoriteData;
-      console.log(this.favoritesData) ;
+    if (this.DicData.favoriteData.length > 0 ) {            
+      this.resultCompare = true;      
+      this.favoritesData = this.DicData.favoriteData;      
     }
     else this.resultCompare = false;
 
@@ -44,11 +41,8 @@ export class FavoritePage implements OnInit {
        
   }
 
-  ngOnInit() { }
-
   selectedTab(index){
-    this.slider.slideTo(index);
- 
+    this.slider.slideTo(index); 
   }
 
   toggleSection(i) {   

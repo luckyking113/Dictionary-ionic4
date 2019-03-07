@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { DicdatabaseService } from './services/dicdatabase.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   public appPages = [
     {
       title: 'Recent',
@@ -35,9 +36,18 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private DicData: DicdatabaseService
   ) {
     this.initializeApp();
+  }
+
+  ngOnInit(){
+    this.DicData.getLocalStorage();
+   }
+
+  ngOnDestroy(){
+    this.DicData.saveLocalStorage();
   }
 
   initializeApp() {

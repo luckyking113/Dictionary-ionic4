@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import dicdata from '../dicdata/dicdata';
+import { Storage } from '@ionic/storage';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class DicdatabaseService {
+export class DicdatabaseService{
+
+  keyForStore:string = 'favoriteData';
 
   Chmeaning: string;
   EngFontInCh:string;
@@ -14,13 +17,21 @@ export class DicdatabaseService {
 
   allWords = [];  
   allDicData = [];
-  favoriteData = [];
+  favoriteData = Array();
 
 
-  constructor(){
+  constructor(private storage: Storage){
     this.allDicData = dicdata;
     this.initDataForSearch();  
   }
+
+  // ngOnInit() {
+  //   this.getLocalStorage();
+  // }
+
+  // ngOnDestroy(){
+  //   this.saveLocalStorage();
+  // }
 
   initDataForSearch(){     
     let dataArray = this.allDicData[0].searchkeyword;   
@@ -118,8 +129,7 @@ export class DicdatabaseService {
   }
 
   saveFavoriteData(data){
-    this.favoriteData.push(data);
-    console.log(this.favoriteData);
+    this.favoriteData.push(data);    
   }
 
   deleteFavoriteData(data){
@@ -131,7 +141,30 @@ export class DicdatabaseService {
       else tempData.push(this.favoriteData[i]);
     }
     this.favoriteData = Array();
-    this.favoriteData = tempData;
+    this.favoriteData = tempData;    
+  }
+
+  //save favoriteData in localstorage
+  saveLocalStorage(){
     console.log(this.favoriteData);
+    if (this.favoriteData.length>0){
+      // console.log('insert favorite word in localstorage');
+      this.storage.set(this.keyForStore,JSON.stringify(this.favoriteData));
+      
+    } else {
+      console.log('there is no favorite word');
+    }    
+  }
+
+  getLocalStorage(){   
+    
+    // console.log("test get localstorage");
+    this.storage.get(this.keyForStore).then((val)=>{
+      if(val !=null && val != undefined){
+        this.favoriteData.push(JSON.parse(val));
+      } else {
+        console.log('not found result in localstorage');
+      }
+    })
   }
 }

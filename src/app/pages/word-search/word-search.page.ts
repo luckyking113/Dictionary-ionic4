@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
-import { NavController , IonSlides, Platform } from '@ionic/angular';
+import { NavController , IonSlides, Platform} from '@ionic/angular';
 import { AdMobFree, AdMobFreeBannerConfig} from '@ionic-native/admob-free/ngx'; 
 import { DicdatabaseService } from '../../services/dicdatabase.service';
 
@@ -12,6 +12,7 @@ import { DicdatabaseService } from '../../services/dicdatabase.service';
 export class WordSearchPage implements OnInit {
 
   @ViewChild('slider') slider: IonSlides;    
+  
   page = 0;
 
   Chmeaning: string;
@@ -26,15 +27,19 @@ export class WordSearchPage implements OnInit {
   visible: boolean;
   // star-half
 
-  constructor(public navCtrl: NavController,public admobFree: AdMobFree,  private platform: Platform, private DicData: DicdatabaseService ) { 
+  constructor(public navCtrl: NavController,public admobFree: AdMobFree, 
+    private platform: Platform, private DicData: DicdatabaseService ) { 
     this.favoriteIcon = 'star-outline';
     this.visible = false;
     this.searchResults = this.DicData.initDataForSearch(); 
     this.initialResults = this.searchResults;      
     this.getAdmobFree();      
+
+   
   }
 
-  ngOnInit() { }
+  ngOnInit(){ }
+
 
   searchkeyword(ev){    
     //65 ~ 90  97~122             
@@ -69,24 +74,30 @@ export class WordSearchPage implements OnInit {
   }
 
   
-  toggleFavorite(i){
-    if (this.visible){      
-      this.favoriteIcon = 'star-outline';            
+  toggleFavorite(i){    
+    var txtToAddClass = "."+"iconIndex"+i.toString();
+    var txtToAddClass1 = "."+"iconIndex3"+i.toString();
+    var txtToAddClass2 = "."+"iconIndex2"+i.toString();
+
+    let shadesEl = document.querySelector(txtToAddClass);
+    let shadesEl3 = document.querySelector(txtToAddClass1);
+    let shadesEl2 = document.querySelector(txtToAddClass2);
+
+    if (shadesEl.classList.contains('favoriteIconColor'))
+    {
+      shadesEl.classList.remove('favoriteIconColor');
+      shadesEl3.classList.remove('favoriteIconColor');
+      shadesEl2.classList.remove('favoriteIconColor');
       this.DicData.deleteFavoriteData(this.searchResults[i]);
-      this.visible = !this.visible;   
-      console.log('delete')    ;      
-    }
-    else {      
-      this.favoriteIcon = 'star-half';       
+      this.visible = !this.visible;       
+    } else {
+      shadesEl.classList.add('favoriteIconColor');   
+      shadesEl3.classList.add('favoriteIconColor');   
+      shadesEl2.classList.add('favoriteIconColor');   
       this.DicData.saveFavoriteData(this.searchResults[i]);
-      this.visible = !this.visible;        
-      console.log('save');
+      this.visible = !this.visible;          
     }
   }
-
-  // toggleIcon(i){
-
-  // }
     
   getAdmobFree(){
     if (this.platform.is('android')) {      
