@@ -4,6 +4,11 @@ ion-header {
     --ion-background-color:#C9C9C9;
 }
 
+ion-button {
+    --box-shadow:0;
+    margin-left: -5%;
+}
+
 ion-searchbar{
     --ion-background-color:#ffffff;    
     --padding-end:0%;
@@ -110,4 +115,13 @@ ion-segment{
 .favoriteIconSize {
     width:20px;
     height: 20px;
+}
+
+.favoriteIconColor{
+    color: #017AFE;
+}
+.headericon{
+    margin-right: 2%;
+    color:black;
+    font-size: 22px;
 }

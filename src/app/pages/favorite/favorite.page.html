@@ -1,10 +1,19 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title>  
+      <!-- <ion-button [routerLink]="['/']" color="transparent"> -->
+      <ion-button (click)="gotoMainScreen()" color="transparent">
+        <ion-icon class="headericon" name="arrow-back"></ion-icon>
+        <h3 class="headericon" style = "margin: 0px; padding: 0px;">Main Screen</h3>
+      </ion-button>
+    </ion-title>
+  </ion-toolbar>   
+  <ion-toolbar>   
     <ion-buttons slot="start">
       <ion-menu-button>
-
       </ion-menu-button>
     </ion-buttons>
+
     
     <div class="segPadding">
         <ion-segment [(ngModel)]="page" class="ion_segment">
@@ -36,6 +45,9 @@
           <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>                       
             <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
+                <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
+                  <ion-icon class = "favoriteIconSize" name="trash"></ion-icon>                  
+                </button>  
                 <h5 style="flex:1">{{item.word}}</h5>
                 <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
                 <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
@@ -53,6 +65,9 @@
           <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>           
             <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
+                <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
+                  <ion-icon class = "favoriteIconSize" name="trash"></ion-icon>                  
+                </button>  
                 <h5 style="flex:1">{{item.word}}</h5>
                 <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
                 <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
@@ -73,6 +88,9 @@
           <ion-list-header *ngFor = "let item of favoritesData; let i = index" no-padding flex-right>           
             <div class="wordContainer">
               <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
+                <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
+                  <ion-icon class = "favoriteIconSize" name="trash"></ion-icon>                  
+                </button>  
                 <h5 style="flex:1">{{item.word}}</h5>
                 <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
                 <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        

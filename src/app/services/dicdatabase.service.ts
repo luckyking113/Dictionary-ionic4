@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import dicdata from '../dicdata/dicdata';
 import { Storage } from '@ionic/storage';
 
@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 @Injectable({
   providedIn: 'root'
 })
-export class DicdatabaseService{
+export class DicdatabaseService implements OnInit, OnDestroy{
 
   keyForStore:string = 'favoriteData';
 
@@ -18,20 +18,16 @@ export class DicdatabaseService{
   allWords = [];  
   allDicData = [];
   favoriteData = Array();
-
+  saveString:string;
 
   constructor(private storage: Storage){
     this.allDicData = dicdata;
-    this.initDataForSearch();  
+    this.initDataForSearch();      
   }
 
-  // ngOnInit() {
-  //   this.getLocalStorage();
-  // }
+  ngOnInit() { }
 
-  // ngOnDestroy(){
-  //   this.saveLocalStorage();
-  // }
+  ngOnDestroy(){ }
 
   initDataForSearch(){     
     let dataArray = this.allDicData[0].searchkeyword;   
@@ -128,11 +124,11 @@ export class DicdatabaseService{
     }    
   }
 
-  saveFavoriteData(data){
-    this.favoriteData.push(data);    
+  saveFavoriteData(data){     
+    this.favoriteData.push(data);          
   }
 
-  deleteFavoriteData(data){
+  deleteFavoriteData(data){    
     let tempData = Array();
     for (var i = 0; i < this.favoriteData.length; i++){
       if (this.favoriteData[i].word == data.word){
@@ -141,30 +137,28 @@ export class DicdatabaseService{
       else tempData.push(this.favoriteData[i]);
     }
     this.favoriteData = Array();
-    this.favoriteData = tempData;    
+    this.favoriteData = tempData;        
   }
 
   //save favoriteData in localstorage
-  saveLocalStorage(){
-    console.log(this.favoriteData);
-    if (this.favoriteData.length>0){
-      // console.log('insert favorite word in localstorage');
-      this.storage.set(this.keyForStore,JSON.stringify(this.favoriteData));
-      
+  saveLocalStorage(){          
+    if (this.favoriteData.length>0){         
+      this.storage.set(this.keyForStore,  this.favoriteData);      
     } else {
+      this.storage.remove(this.keyForStore);
       console.log('there is no favorite word');
     }    
   }
 
-  getLocalStorage(){   
-    
-    // console.log("test get localstorage");
-    this.storage.get(this.keyForStore).then((val)=>{
-      if(val !=null && val != undefined){
-        this.favoriteData.push(JSON.parse(val));
-      } else {
-        console.log('not found result in localstorage');
-      }
-    })
+  getLocalStorage(){       
+    // this.storage.get(this.keyForStore).then((val)=>{
+    //   if (val !=null){
+    //     val.forEach(element => {
+    //       this.favoriteData.push(element);
+    //     });                
+    //   }else {
+    //     console.log('not found result in localstorage');
+    //   }      
+    // });    
   }
 }

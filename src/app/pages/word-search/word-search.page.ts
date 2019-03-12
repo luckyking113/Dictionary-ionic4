@@ -9,7 +9,7 @@ import { DicdatabaseService } from '../../services/dicdatabase.service';
   templateUrl: './word-search.page.html',
   styleUrls: ['./word-search.page.scss'],
 })
-export class WordSearchPage implements OnInit {
+export class WordSearchPage implements OnInit{
   public noResult = [
     {
       content: 'No Result',      
@@ -45,12 +45,18 @@ export class WordSearchPage implements OnInit {
     this.searchResults = this.DicData.initDataForSearch(); 
     this.initialResults = this.searchResults;      
     this.getAdmobFree();      
-
-   
   }
 
-  ngOnInit(){ }
+  ngOnInit(){    
+  }
 
+  ionViewDidEnter(){    
+    this.DicData.getLocalStorage();    
+  }
+
+  ionViewWillLeave(){    
+    this.DicData.saveLocalStorage();        
+  }
 
   searchkeyword(ev){    
     //65 ~ 90  97~122             

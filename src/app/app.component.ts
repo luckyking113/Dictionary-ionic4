@@ -10,7 +10,7 @@ import { DicdatabaseService } from './services/dicdatabase.service';
   templateUrl: 'app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   public appPages = [
     {
       title: 'Recent',
@@ -37,18 +37,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private DicData: DicdatabaseService,
+    // private DicData: DicdatabaseService,
   ) {
     this.initializeApp();
   }
 
-  ngOnInit(){
-    this.DicData.getLocalStorage();
-   }
 
-  ngOnDestroy(){
-    this.DicData.saveLocalStorage();
-  }
 
   initializeApp() {
     this.platform.ready().then(() => {
