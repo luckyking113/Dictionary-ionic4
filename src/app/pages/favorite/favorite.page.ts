@@ -48,10 +48,10 @@ export class FavoritePage {
     } else this.resultCompare = false;
   }  
 
-  ionViewWillLeave(){
-    console.log("test save data into localstorage");
-    this.DicData.saveLocalStorage();
-  }
+  // ionViewWillLeave(){
+  //   console.log("test save data into localstorage");
+  //   this.DicData.saveLocalStorage();
+  // }
 
   gotoMainScreen(){        
     this.router.navigate(['']);    

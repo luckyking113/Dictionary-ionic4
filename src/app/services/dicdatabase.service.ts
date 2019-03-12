@@ -17,8 +17,7 @@ export class DicdatabaseService implements OnInit, OnDestroy{
 
   allWords = [];  
   allDicData = [];
-  favoriteData = Array();
-  saveString:string;
+  favoriteData = Array();  
 
   constructor(private storage: Storage){
     this.allDicData = dicdata;
