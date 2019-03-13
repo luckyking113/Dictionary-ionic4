@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>        
+      <ion-button (click)="gotoMainScreen()" color="transparent">
+        <ion-icon class="headericon" name="arrow-back"></ion-icon>
+        <h3 class="headericon" style = "margin: 0px; padding: 0px;">Main Screen</h3>
+      </ion-button>
+    </ion-title>
+  </ion-toolbar>   
+  <ion-toolbar>   
+    <ion-buttons slot="start">
+      <ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons>
+      
+    <div class="segPadding">
+        <ion-segment [(ngModel)]="page" class="ion_segment">
+          <ion-segment-button value="English" (click)="selectedTab(0)" checked>
+            <p class="segColor">English</p>
+          </ion-segment-button>
+          <ion-segment-button value="Chinese" (click)="selectedTab(1)">
+            <p class="segColor">Chinese</p>
+          </ion-segment-button>
+          <ion-segment-button value="Kachin" (click)="selectedTab(2)">
+            <p class="segColor">Kachin</p>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding class="content_container">
+  <ion-slides #slider>
+    <ion-slide>  
+      <div class="wordsContainer">                      
+        <ion-list-header *ngFor = "let item of searchResult; let i = index" no-padding flex-right>           
+          <div class="wordContainer">
+            <ion-item color="transparent" no-padding detail-none>
+              <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
+                <ion-icon class = "favoriteIconSize iconIndex" name="star-outline"></ion-icon>                  
+              </button>   
+              <h5 style="flex:1">{{item.word}}</h5>
+            </ion-item>                
+            <ion-item color="transparent" no-padding no-lines>              
+              <p class="custome_Ptag">{{item.Engmeaning}}</p>                              
+            </ion-item>
+          </div>
+        </ion-list-header>   
+      </div>   
+    </ion-slide>
+    <ion-slide>  
+      <div class="wordsContainer">
+        <ion-list-header *ngFor = "let item of searchResult; let i = index" no-padding flex-right>           
+          <div class="wordContainer">
+            <ion-item color="transparent" no-padding detail-none>
+              <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
+                <ion-icon class = "favoriteIconSize iconIndex" name="star-outline"></ion-icon>                  
+              </button>              
+              <h5 style="flex:1">{{item.word}}</h5>
+            </ion-item>                
+            <ion-item color="transparent" no-padding no-lines>              
+              <div>
+                <p class="custome_Ptag chinese">{{item.Chmeaning}}</p>  
+                <p class="custome_Ptag eng">{{item.EngFontInCh}}</p>              
+              </div>                
+            </ion-item>
+          </div>
+        </ion-list-header>   
+      </div>   
+    </ion-slide>
+    <ion-slide>  
+      <div class="wordsContainer">
+        <ion-list-header *ngFor = "let item of searchResult; let i = index" no-padding flex-right>           
+          <div class="wordContainer">
+            <ion-item color="transparent">
+              <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
+                <ion-icon class = "favoriteIconSize iconIndex" name="star-outline"></ion-icon>                  
+              </button>  
+              <h5 style="flex:1">{{item.word}}</h5>
+            </ion-item>                
+            <ion-item color="transparent" no-padding no-lines>    
+              <div>
+                <p class="custome_Ptag kachin">{{item.Kameaning}}</p>
+                <p class="custome_Ptag eng">{{item.EngFontInKa}}</p>              
+              </div>                
+            </ion-item>
+          </div>
+        </ion-list-header>   
+      </div>   
+    </ion-slide>
+  </ion-slides>  
+</ion-content>

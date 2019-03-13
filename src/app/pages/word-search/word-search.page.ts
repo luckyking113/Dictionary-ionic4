@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { NavController , IonSlides, Platform} from '@ionic/angular';
 import { AdMobFree, AdMobFreeBannerConfig} from '@ionic-native/admob-free/ngx'; 
 import { DicdatabaseService } from '../../services/dicdatabase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-word-search',
@@ -37,9 +38,11 @@ export class WordSearchPage implements OnInit{
   favoriteIcon: string;
   visible: boolean;
   resultCompare:boolean = true;
+  loopCount = Array();
 
   constructor(public navCtrl: NavController,public admobFree: AdMobFree, 
-    private platform: Platform, private DicData: DicdatabaseService ) { 
+    private platform: Platform, private DicData: DicdatabaseService , private router: Router ) { 
+    this.loopCount = Array(3).fill(0).map((x,i)=>i);
     this.favoriteIcon = 'star-outline';
     this.visible = false;
     this.searchResults = this.DicData.initDataForSearch(); 
@@ -85,60 +88,54 @@ export class WordSearchPage implements OnInit{
   }
 
   toggleSection(i) {   
-    this.searchResults[i].open = !this.searchResults[i].open;   
+    this.DicData.result = this.searchResults[i];    
+    this.router.navigate(['/searchresult']);    
   }
 
-  toggleItem(i){    
-    this.searchResults[i].open = !this.searchResults[i].open;
+  toggleItem(i){            
   }
 
   
-  toggleFavorite(i){    
-    var txtToAddClass = "."+"iconIndex"+i.toString();
-    var txtToAddClass1 = "."+"iconIndex3"+i.toString();
-    var txtToAddClass2 = "."+"iconIndex2"+i.toString();
-    this.searchResults[i].open = !this.searchResults[i].open;  
+  toggleFavorite(i){        
+    // var txtToAddClass = "."+"iconIndex"+i.toString();
+    // this.searchResults[i].open = !this.searchResults[i].open;  
+    // let shadesEl = document.querySelector(txtToAddClass);
 
-    let shadesEl = document.querySelector(txtToAddClass);
-    let shadesEl3 = document.querySelector(txtToAddClass1);
-    let shadesEl2 = document.querySelector(txtToAddClass2);
-
-    if (shadesEl.classList.contains('favoriteIconColor'))
-    {
-      shadesEl.classList.remove('favoriteIconColor');
-      shadesEl3.classList.remove('favoriteIconColor');
-      shadesEl2.classList.remove('favoriteIconColor');
-      this.DicData.deleteFavoriteData(this.searchResults[i]);
-      this.visible = !this.visible;       
-    } else {
-      shadesEl.classList.add('favoriteIconColor');   
-      shadesEl3.classList.add('favoriteIconColor');   
-      shadesEl2.classList.add('favoriteIconColor');   
-      this.DicData.saveFavoriteData(this.searchResults[i]);
-      this.visible = !this.visible;          
-    }
+    // if (shadesEl.classList.contains('favoriteIconColor'))
+    // {
+    //   shadesEl.classList.remove('favoriteIconColor');
+    //   this.DicData.deleteFavoriteData(this.searchResults[i]);
+    //   this.visible = !this.visible;       
+    // } else {
+    //   shadesEl.classList.add('favoriteIconColor');   
+    //   this.DicData.saveFavoriteData(this.searchResults[i]);
+    //   this.visible = !this.visible;          
+    // }
   }
     
   getAdmobFree(){
+    // OK
     if (this.platform.is('android')) {      
       let bannerConfig: AdMobFreeBannerConfig = {
-          isTesting: true, // Remove in production
-          autoShow: true,//,
-          id: 'ca-app-pub-7403328130531745~9754019527'
+          // isTesting: true, // Remove in production
+          autoShow: false,//,
+          // id: 'ca-app-pub-7403328130531745~9754019527'
+          id:'ca-app-pub-7403328130531745/1109242741'
       };
       this.admobFree.banner.config(bannerConfig);
-
-      this.admobFree.banner.prepare().then(() => {       
+      this.admobFree.banner.prepare().then(() => { 
+        this.admobFree.banner.show();
       }).catch(e => alert(e));
     } else {      
       let bannerConfig: AdMobFreeBannerConfig = {
-        isTesting: true, // Remove in production
-        autoShow: true,//,
-        id: 'ca-app-pub-7403328130531745~3025616186'
+        // isTesting: true, // Remove in production
+        autoShow: false,//,
+        id: 'ca-app-pub-7403328130531745/5268636143'
       };
       this.admobFree.banner.config(bannerConfig);
 
       this.admobFree.banner.prepare().then(() => {
+        this.admobFree.banner.show();
       }).catch(e => alert(e));
     }
   } 

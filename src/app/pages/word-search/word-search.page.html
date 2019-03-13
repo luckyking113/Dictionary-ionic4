@@ -25,7 +25,6 @@
   </ion-toolbar> 
 </ion-header>
 
-
 <ion-content no-padding class="content_container">
     <ion-slides #slider *ngIf = "!resultCompare; else show_Result">
       <ion-slide *ngFor="let item of noResult"> 
@@ -34,66 +33,17 @@
     </ion-slides> 
     <ng-template #show_Result>
     <ion-slides #slider>
-      <ion-slide>  
+      <ion-slide *ngFor = "let count of loopCount">  
         <div class="wordsContainer">                      
           <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
             <div class="wordContainer">
-              <ion-item color="transparent" class="toggleIcon(i)" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
+              <ion-item color="transparent" class="toggleIcon(i)" no-padding detail-none>
                 <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
                   <ion-icon class = "favoriteIconSize iconIndex{{i}}" name="star-outline"></ion-icon>                  
-                </button>               
-               
+                </button>                        
                 <h5 style="flex:1">{{item.word}}</h5>
-                <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
-                <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
+                <ion-icon name ="arrow-forward" (click)="toggleSection(i)"></ion-icon>                                
               </ion-item>                
-              <ion-item color="transparent" *ngIf="item.open" no-padding no-lines>              
-                <p class="custome_Ptag">{{item.Engmeaning}}</p>                              
-              </ion-item>
-            </div>
-          </ion-list-header>   
-        </div>   
-      </ion-slide>
-      <ion-slide>  
-        <div class="wordsContainer">
-          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
-            <div class="wordContainer">
-              <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
-                <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
-                  <ion-icon class = "favoriteIconSize iconIndex3{{i}}" name="star-outline"></ion-icon>                  
-                </button>               
-                <h5 style="flex:1">{{item.word}}</h5>
-                <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
-                <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
-              </ion-item>                
-              <ion-item color="transparent" *ngIf="item.open" no-padding no-lines>              
-                <div>
-                  <p class="custome_Ptag chinese">{{item.Chmeaning}}</p>  
-                  <p class="custome_Ptag eng">{{item.EngFontInCh}}</p>              
-                </div>                
-              </ion-item>
-            </div>
-          </ion-list-header>   
-        </div>   
-      </ion-slide>
-      <ion-slide>  
-        <div class="wordsContainer">
-          <ion-list-header *ngFor = "let item of searchResults; let i = index" no-padding flex-right>           
-            <div class="wordContainer">
-              <ion-item color="transparent" (click)="toggleSection(i)" no-padding detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
-                <button clear text-left class = "bgcolor" (click)="toggleFavorite(i)">
-                  <ion-icon class = "favoriteIconSize iconIndex2{{i}}" name="star-outline"></ion-icon>                  
-                </button>  
-                <h5 style="flex:1">{{item.word}}</h5>
-                <ion-icon name ="arrow-forward" *ngIf="!item.open"></ion-icon>                
-                <ion-icon name ="arrow-down" *ngIf="item.open"></ion-icon>                                        
-              </ion-item>                
-              <ion-item color="transparent" *ngIf="item.open" no-padding no-lines>    
-                <div>
-                  <p class="custome_Ptag kachin">{{item.Kameaning}}</p>
-                  <p class="custome_Ptag eng">{{item.EngFontInKa}}</p>              
-                </div>                
-              </ion-item>
             </div>
           </ion-list-header>   
         </div>   

@@ -18,10 +18,11 @@ export class DicdatabaseService implements OnInit, OnDestroy{
   allWords = [];  
   allDicData = [];
   favoriteData = Array();  
+  result = Array();
 
   constructor(private storage: Storage){
     this.allDicData = dicdata;
-    this.initDataForSearch();      
+    this.initDataForSearch();          
   }
 
   ngOnInit() { }
@@ -141,12 +142,12 @@ export class DicdatabaseService implements OnInit, OnDestroy{
 
   //save favoriteData in localstorage
   saveLocalStorage(){          
-    if (this.favoriteData.length>0){         
-      this.storage.set(this.keyForStore,  this.favoriteData);      
-    } else {
-      this.storage.remove(this.keyForStore);
-      console.log('there is no favorite word');
-    }    
+    // if (this.favoriteData.length>0){         
+    //   this.storage.set(this.keyForStore,  this.favoriteData);      
+    // } else {
+    //   this.storage.remove(this.keyForStore);
+    //   console.log('there is no favorite word');
+    // }    
   }
 
   getLocalStorage(){       
